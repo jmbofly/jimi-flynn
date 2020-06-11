@@ -1,0 +1,159 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import '~bootstrap/scss/bootstrap.scss';
+@import 'home';
+
+html,
+body {
+    overflow-x: hidden !important;
+}
+
+.navbar {
+    height: 70px !important;
+    z-index: 999 !important;
+    box-shadow: $box-shadow;
+}
+
+.classy-navbar-toggler {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.classy-navbar-toggler .navbarToggler {
+    display: inline-block;
+    cursor: pointer
+}
+
+.classy-navbar-toggler .navbarToggler span {
+    position: relative;
+    background: linear-gradient(180deg, $primary, $peach);
+    border-radius: 3px;
+    display: block;
+    height: 3px;
+    margin-top: 8px;
+    padding: 0;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    width: 50px;
+    cursor: pointer
+}
+
+.classy-navbar-toggler .navbarToggler.active span:nth-of-type(1) {
+    -webkit-transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg);
+    top: 8px
+}
+
+.classy-navbar-toggler .navbarToggler.active span:nth-of-type(2) {
+    opacity: 0
+}
+
+.classy-navbar-toggler .navbarToggler.active span:nth-of-type(3) {
+    -webkit-transform: rotate3d(0, 0, 1, -45deg);
+    transform: rotate3d(0, 0, 1, -45deg);
+    top: -13px
+}
+
+#sidenav-wrapper {
+    position: fixed !important;
+    top: 70px;
+    z-index: 1000 !important;
+    width: 100vw;
+    height: 100%;
+    background: #FFF;
+    transform: translate(-100vw, 0);
+    transition: all .75s ease-out;
+
+    .nav {
+        padding: 5em 0;
+    }
+
+    &.open {
+        transform: translate(0, 0);
+
+    }
+}
+
+.balls-wrapper, #stage {
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    overflow: hidden;
+}
+
+.ball {
+    // position: absolute;
+    min-width: 5px !important;
+    min-height: 5px !important;
+    max-width: 30px !important;
+    max-height: 30px !important;
+    border-radius: 50%;
+    background-color: $cherry;
+    z-index: 500;
+}
+
+.hero {
+    position: relative;
+    top: 0;
+    height: 100vh;
+    padding: 100px 0;
+
+    &.plumb {
+        background: linear-gradient(rgb(91, 32, 85), rgb(47, 22, 59)) no-repeat;
+    }
+
+    &.cherry {
+        background: linear-gradient($cherry, $orange) no-repeat;
+    }
+
+    .hero-title {
+        z-index: 2000 !important;
+    }
+
+    .hero-image {
+        padding: 1rem;
+        z-index: 900;
+    }
+
+    .about-image {
+        position: absolute !important;
+        left: -35px;
+        bottom: 0;
+        overflow: hidden;
+    }
+}
+
+.decal {
+    position: absolute;
+    transform: rotate(315deg) scale(3);
+    left: calc(50% - 75px);
+    bottom: -88px;
+    width: 175px;
+    height: 175px;
+    border: #fff solid 15px;
+    background-color: transparent;
+    box-shadow: $box-shadow;
+    z-index: 1000;
+
+    .outline-box {
+        width: 160px;
+        height: 160px;
+        transform-origin: left;
+        box-sizing: content-box;
+        transform: translate(-8px, -8px);
+        border: 1px $cherry dashed;
+        background-color: transparent;
+        // transform: rotate(315deg);
+        z-index: 1001;
+    }
+
+    .gradient-box {
+        height: 100px;
+        width: 100px;
+        margin: 30px;
+        // transform: translate(315deg);
+        background: linear-gradient(45deg, rgb(91, 32, 85), rgb(47, 22, 59));
+    }
+}
