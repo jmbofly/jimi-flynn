@@ -75,12 +75,13 @@ body {
     }
 }
 
-.balls-wrapper, #stage {
+.balls-wrapper svg {
     top: 0;
     width: 100vw;
     height: 100vh;
-    position: absolute;
     overflow: hidden;
+    position: fixed;
+    // z-index: 997 !important;
 }
 
 .ball {
@@ -98,7 +99,9 @@ body {
     position: relative;
     top: 0;
     height: 100vh;
+    max-height: 960px;
     padding: 100px 0;
+    overflow: hidden;
 
     &.plumb {
         background: linear-gradient(rgb(91, 32, 85), rgb(47, 22, 59)) no-repeat;
@@ -110,11 +113,18 @@ body {
 
     .hero-title {
         z-index: 2000 !important;
+        font-size: 4rem;
+
+    }
+    .hero-subtitle {
+        z-index: 1000 !important;
+        height: 0;
+        overflow: hidden;
     }
 
     .hero-image {
         padding: 1rem;
-        z-index: 900;
+        z-index: 998;
     }
 
     .about-image {
