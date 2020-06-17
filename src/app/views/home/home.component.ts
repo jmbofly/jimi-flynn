@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.animateTitle();
-    // this.animateBalls();
     this.animateDecal();
     this.splash(this.animation.D3);
   }
@@ -83,82 +82,57 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-  animateBalls() {
-    const $ = (s, o = document) => o.querySelector(s);
-    const container = $('.balls-wrapper');
-    const count = 20;
-    const random = (min, max) => min + Math.random() * (max - min);
-    const between = (min, max, percent) => max - (max - min) * (1 - percent);
-    
-    for (let i = 0; i < count - 1; i++) {
-      const ball: Element = document.createElement('div');
-      ball.classList.add('ball');
-      container.appendChild(ball);
-    }
-    this.animation.utils.toArray('.ball').forEach((ball: Element, idx) => {
-      this.animation.GSAP.set(ball, { repeat: -1, duration: 60});
-      const tl = this.animation.timeline();
-      tl.fromTo(ball, {
-         x: this.animation.utils.random(0, container.clientWidth),
-         y: this.animation.utils.random(0, container.clientHeight),
-         width: `5px`,
-        height: `5px`,
-        yoyo: true,
-      }, {
-        duration: 100,
-          scrub: (a) => {
-          console.log(a)
-          return (document.body.scrollTop > 0) ? 1 : 0;
-        },
-         ease: 'elastic',
-         repeat: -1,
-         yoyo: true,
-             x: this.animation.utils.random(0, container.clientWidth),
-             y: this.animation.utils.random(0, container.clientHeight),
-           })
-         })
-  }
+  
 
   splash(el = this.animation.D3) {
       const $ = (s: string, o = document): Element => o.querySelector(s),
       container = $('.balls-wrapper'),
       numNodes = 1500,
-      width = container.parentElement.offsetWidth * .75 / 2,
-        height = container.parentElement.offsetHeight * .75 / 2,
+      width = container.parentElement.offsetWidth / 3,
+        height = container.parentElement.offsetHeight / 3,
       links = DATA.links.map(d => Object.create(d)),
       nodes = DATA.nodes.map(d => Object.create(d)),
      node_nums: any = el.range(numNodes).map(function (d, idx) {
       return [Math.random() * 100, idx]
     }),
     scale = 1.7,
-    center = [width / 2, height / 2],
+    center = [width / 2 - 200, height / 2 - 200],
     rescale = isNaN(nodes[0].x),
     svg = el.select('.balls-wrapper').append('svg:svg').attr("viewBox", `${[0, 0, width, height]}`),
+    simulation = el
+    .forceSimulation(nodes)
+      .alphaDecay(.03)
+      .velocityDecay(.35)
+      // .force('layout', el.forceRadial((d, i, data) => {
+      //   return this.between(i, d.vx, .93)
+      // }))
+    .force('link', el.forceLink(links).id((d: any) => d.id))
+      .force('center', el.forceCenter(width / 2, height / 2))
+      .force('charge', el.forceManyBody().strength(-60))
+      .force("x", el.forceX())
+      .force("y", el.forceY())
+      .on("tick", tick),
+        link = svg.append("g")
+          .attr("stroke", 'rgba(0,0,0,.3')
+          .attr("stroke-opacity", 0.6)
+          .selectAll("line")
+          .data(links)
+          .join("line")
+          .attr("stroke-width", 1),
     node = svg
       .selectAll("circle")
-      .data([...nodes, ...links, nodes])
       .enter()
-      .append("circle")
-      .attr('padding', '50px')
-      .attr('width', 15)
-      .attr('height', 15)
-      .attr("r", 1.5)
-      .attr('fill', '#ffffffe0'),
+      .data(nodes)
+      .join("circle")
+      .attr("r", 2)
+      .attr('fill', (d: any) => {
+        const scale = el.scaleOrdinal(el.schemeCategory10);
+        return scale(d.group);
+      }).call(drag(simulation)),
       // .attr('fill', (e: any, i) => {
       //   const rando = parseInt(this.animation.utils.random(0, 500).toFixed())
       //   return (rando > 200) ? `rgba(47,56,59, 0.${rando * 200})` : rando > 300 ? `rgba(255,255,255,0.${rando})`: `rgba(210,75,71, 0.${rando * 10})`;
       // }),
-    simulation = el
-    .forceSimulation(nodes)
-      .alphaDecay(0)
-      .velocityDecay(.9)
-      .force('layout', el.forceRadial((d, i, data) => {
-        return this.between(400, 500, 1)
-      }))
-    .force('link', el.forceLink(links).strength(.5).id((d: any) => d.id))
-      .force('center', el.forceCenter(width / 2, height / 2))
-      .force('charge', el.forceManyBody().strength(-120))
-      .on("tick", tick),
       config = {
         container,
         width,
@@ -206,10 +180,38 @@ export class HomeComponent implements OnInit {
       simulation.force('layout', el.forceManyBody().strength(-a.index)).force('collide', el.forceRadial(-150 / -a.index))
 
     }
+    function drag(sim) {
+
+      function dragstarted(d) {
+        if (!el.event.active) sim.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      }
+
+      function dragged(d) {
+        d.fx = el.event.x;
+        d.fy = el.event.y;
+      }
+
+      function dragended(d) {
+        if (!el.event.active) sim.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      }
+
+      return el.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended);
+    }
     function tick() {
-      // const line = el.line();
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
       
-      node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y).on('mouseover', handleMouseOver).on('click', handleMouseOut)
+      node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y);
       // node.insert('line').attr('d', (d: any) => line(node_nums))
     }
     
