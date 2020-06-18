@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'variables';
 @import '~bootstrap/scss/bootstrap.scss';
+@import '~font-awesome/css/font-awesome.css';
 @import 'home';
 
 html,
@@ -81,6 +82,12 @@ body {
     height: 100vh;
     overflow: hidden;
     position: fixed;
+
+    .line {
+        fill: none;
+        stroke: url(#line-gradient);
+    }
+
     // z-index: 997 !important;
 }
 
@@ -95,16 +102,34 @@ body {
     z-index: 500;
 }
 
+.scroller-toggle {
+    z-index: 2000;
+    position: fixed !important;
+    width: 75px;
+    height: 75px;
+    bottom: 2rem;
+    left: calc(50vw - 37.5px);
+    border: 4px solid;
+    border-radius: 50%;
+    border-color: linear-gradient(180deg, $cherry, rgba(32, 235, 19, .7));
+
+    .btn {
+        padding: 16px 25px;
+        color: white;
+        font-weight: 100;
+    }
+}
+
 .hero {
     position: relative;
+    z-index: 900;
     top: 0;
     height: 100vh;
-    max-height: 960px;
     padding: 100px 0;
     overflow: hidden;
 
     &.plumb {
-        background: linear-gradient(rgb(91, 32, 85), rgb(47, 22, 59)) no-repeat;
+        background: linear-gradient(210deg, rgb(0, 0, 0), darken($plumb, 8)) no-repeat fixed;
     }
 
     &.cherry {
@@ -114,8 +139,11 @@ body {
     .hero-title {
         z-index: 2000 !important;
         font-size: 4rem;
-
+        background: -webkit-linear-gradient(180deg, $cherry, rgba(32, 235, 19, .7));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
+
     .hero-subtitle {
         z-index: 1000 !important;
         height: 0;
@@ -123,7 +151,6 @@ body {
     }
 
     .hero-image {
-        padding: 1rem;
         z-index: 998;
     }
 

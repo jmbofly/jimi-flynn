@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimationService } from 'src/app/core/animation.service';
 import { DATA } from 'src/app/data/data';
-import { rgb } from 'd3';
-import { transition } from '@angular/animations';
-import { CssSelector } from '@angular/compiler';
 import { GraphService } from 'src/app/core/graph.service';
 @Component({
   selector: 'jf-home',
@@ -14,8 +11,10 @@ export class HomeComponent implements OnInit {
   attributs: any;
   canvas: any;
   context: any;
+  scrollerLocations: string[];
+  active = 1;
 
-  constructor(private animation: AnimationService, private graph: GraphService) { }
+  constructor(public animation: AnimationService, private graph: GraphService) { }
 
   private random(min, max): number {
     return min + Math.random() * (max - min)
@@ -23,12 +22,18 @@ export class HomeComponent implements OnInit {
   private between(min, max, percent) {
     return max - (max - min) * (1 - percent)
   };
+  private scrollerInit() {
+    const d3 = this.animation.D3;
+    const $ = (s: string, o = document): Element => o.querySelector(s);
+    this.animation.GSAP.to(window, { duration: 1, scrollTo: { y: 0, offsetY: 70 } });
+  }
 
 
   ngOnInit(): void {
     this.animateTitle();
     this.animateDecal();
-    this.splash(this.animation.D3);
+    this.wiredLayout(this.animation.D3);
+    this.scrollerInit()
   }
 
   animateTitle() {
@@ -82,104 +87,80 @@ export class HomeComponent implements OnInit {
       }
     })
   }
-  
 
-  splash(el = this.animation.D3) {
-      const $ = (s: string, o = document): Element => o.querySelector(s),
+
+  wiredLayout(el = this.animation.D3) {
+    const colors = el.scaleOrdinal(el.schemePaired);
+    const setColors = (d) => colors(d);
+    const $ = (s: string, o = document): Element => o.querySelector(s),
       container = $('.balls-wrapper'),
       numNodes = 1500,
-      width = container.parentElement.offsetWidth / 3,
-        height = container.parentElement.offsetHeight / 3,
+      width = container.parentElement.offsetWidth * .8,
+      height = container.parentElement.offsetHeight * .8,
       links = DATA.links.map(d => Object.create(d)),
       nodes = DATA.nodes.map(d => Object.create(d)),
-     node_nums: any = el.range(numNodes).map(function (d, idx) {
-      return [Math.random() * 100, idx]
-    }),
-    scale = 1.7,
-    center = [width / 2 - 200, height / 2 - 200],
-    rescale = isNaN(nodes[0].x),
-    svg = el.select('.balls-wrapper').append('svg:svg').attr("viewBox", `${[0, 0, width, height]}`),
-    simulation = el
-    .forceSimulation(nodes)
-      .alphaDecay(.03)
-      .velocityDecay(.35)
-      // .force('layout', el.forceRadial((d, i, data) => {
-      //   return this.between(i, d.vx, .93)
-      // }))
-    .force('link', el.forceLink(links).id((d: any) => d.id))
-      .force('center', el.forceCenter(width / 2, height / 2))
-      .force('charge', el.forceManyBody().strength(-60))
-      .force("x", el.forceX())
-      .force("y", el.forceY())
-      .on("tick", tick),
-        link = svg.append("g")
-          .attr("stroke", 'rgba(0,0,0,.3')
-          .attr("stroke-opacity", 0.6)
-          .selectAll("line")
-          .data(links)
-          .join("line")
-          .attr("stroke-width", 1),
-    node = svg
-      .selectAll("circle")
-      .enter()
-      .data(nodes)
-      .join("circle")
-      .attr("r", 2)
-      .attr('fill', (d: any) => {
-        const scale = el.scaleOrdinal(el.schemeCategory10);
-        return scale(d.group);
-      }).call(drag(simulation)),
-      // .attr('fill', (e: any, i) => {
-      //   const rando = parseInt(this.animation.utils.random(0, 500).toFixed())
-      //   return (rando > 200) ? `rgba(47,56,59, 0.${rando * 200})` : rando > 300 ? `rgba(255,255,255,0.${rando})`: `rgba(210,75,71, 0.${rando * 10})`;
-      // }),
-      config = {
-        container,
-        width,
-        height,
-        nodes,
-        links,
-        scale,
-        center,
-        rescale,
-        svg,
-        node,
-        simulation,
-        tick
-    },
-    graph = this.graph.createGraph(this.animation.D3, config);
-      
+      scale = 1.7,
+      center = [width / 2 - 200, height / 2 - 200],
+      rescale = isNaN(nodes[0].x),
+      svg = el.select('.balls-wrapper').append('svg:svg').attr("viewBox", `${[0, 0, width, height]}`),
+      simulation = el
+        .forceSimulation(nodes)
+        .alphaDecay(.003)
+        .velocityDecay(.55)
+        .force('layout', el.forceRadial((d, i, data) => {
+          return this.random(0, this.between(-i, d.x, 5))
+        }))
+        .force('link', el.forceLink(links).id((d: any) => d.id))
+        .force('center', el.forceCenter(width / 2, height / 2))
+        .force('charge', el.forceManyBody().strength(-150))
+        .force("x", el.forceX().strength(.090))
+        .force("y", el.forceY().strength(.090))
+        .on("tick", tick),
+      link = svg.append("g")
+      .selectAll("line")
+      .data(links)
+      .join("line")
+        .attr("stroke", (d: any) => setColors(d.group))
+        .attr("stroke-opacity", .7)
+        .attr('class', 'line')
+        .attr("stroke-width", 1),
+      node = svg
+        .selectAll("circle")
+        .enter()
+        .data(nodes)
+        .join("circle")
+        .attr("r", 2)
+        .attr('fill', (d: any) => setColors(d.group))
+        .call(drag(simulation));
+    const x = el.range(width);
+    const y = el.range(height);
 
-    // differ application of the forces
-    // setTimeout(() => {
-    //   simulation.restart();
-    //   node.transition().attr("r", (d: any) => d.r);
-    // }, 2500);
+    svg.append("linearGradient")
+      .attr("id", "line-gradient")
+      .attr("gradientUnits", "userSpaceOnUse")
+      .selectAll("stop")
+      .data((d: any) => [
+        { offset: "0%", color: 'rgba(32, 235, 19, .7)' },
+        { offset: "100%", color: 'rgba(210,71,75, 0.75)' }
+      ])
+      .enter().append("stop")
+      .attr("offset", (d: any) => { return d.offset; })
+      .attr("stop-color", (d: any) => { return d.color; });
+
+    // Add the valueline path.
+    svg.append("path")
+      .attr("class", "line");
+
 
     // once the arrangement is initialized, scale and translate it
     if (rescale) {
       for (const node of nodes) {
         node.x = node.x * scale + center[0];
         node.y = node.y * scale + center[1];
-        
+
       }
     }
 
-    // Create Event Handlers for mouse
-    function handleMouseOver(a, b) {  // Add interactivity
-      // Use D3 to select element, change color and size
-      el.select(this).style('fill', `rgba(210,75,71, 0.${a.index})`);
-      const change = () => simulation.force('layout', el.forceManyBody().strength(a.index)).force('collide', el.forceRadial(-150 / a.index));
-      setTimeout(change, 0)
-    }
-
-    function handleMouseOut(a, b) {
-      // Use D3 to select element, change color back to normal
-      el.select(this).style('fill', '#fff');
-
-      simulation.force('layout', el.forceManyBody().strength(-a.index)).force('collide', el.forceRadial(-150 / -a.index))
-
-    }
     function drag(sim) {
 
       function dragstarted(d) {
@@ -210,11 +191,28 @@ export class HomeComponent implements OnInit {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y);
-      
+
+
       node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y);
-      // node.insert('line').attr('d', (d: any) => line(node_nums))
     }
-    
+
+    function breakLines(node, breakAt) {
+
+    }
+
+  }
+
+  scrollToNext(gsap: GSAP) {
+    const tl = gsap.timeline();
+    console.log(this.active)
+    if (this.active > 3) {
+      tl.to(window, { duration: 1, scrollTo: { y: '#section1', offsetY: 70 } });
+      this.active = 1;
+      return;
+    }
+    tl.to(window, { duration: 1, scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
+    this.active += 1;
   }
 
 }
+

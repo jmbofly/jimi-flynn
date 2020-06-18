@@ -1,23 +1,22 @@
-<section id="first" class="hero plumb w-100" style="">
-    <div class="container">
+<section id="section1" class="hero plumb w-100" style="">
+    <div class="container" style="margin-top: 7rem;">
         <div class="row">
-            <div class="hero-image mx-auto">
-                <img id="portrait" src="assets/img/portrait.png" width="75" alt="">
+            <div class="hero-image">
+                <img id="portrait" src="assets/img/portrait.png" width="60" alt="" class="p-1">
             </div>
-        </div>
-        <div class="row">
-            <div class="mx-auto mt-2">
-                <h1 class="hero-title headline text-muted text-center pb-0 mb-0">JIMI FLYNN</h1>
-                <h1 class="hero-subtitle display-2 text-white mt-0 pt-0 text-center">
-                  <b class="text-white mt-0 pt-0">designer</b>
+            <div class="mt-2">
+                <h1 class="hero-title headline text-center pb-0 mb-0">JIMI FLYNN</h1>
+                <h1 class="hero-subtitle text-white mt-0 pt-0 text-center">
+                    <b class="text-white text-center mt-0 pt-0">designer</b>
                 </h1>
             </div>
+
         </div>
     </div>
     <div class="balls-wrapper w-100 h-100">
     </div>
 </section>
-<section id="second" class="hero bg-secondary">
+<section id="section2" class="hero bg-secondary">
     <div class="container">
         <div class="row">
             <div class="about-image" [style.background-image]="'url(assets/img/skyline@2x.png)'">
@@ -33,7 +32,7 @@
         
     </div>
 </section>
-<section id="third" class="hero bg-info">
+<section id="section3" class="hero bg-info">
     <div class="container">
         <div class="row">
             
@@ -55,7 +54,7 @@
         </div>
     </div>
 </section>
-<section id="fourth" class="hero bg-dark">
+<section id="section4" class="hero bg-dark">
     <div class="container">
         <div class="row">
             
@@ -70,3 +69,7 @@
 
     </div>
 </section>
+<div class="scroller-toggle mx-auto">
+    <button class="btn btn-link text-center next-button" (click)="scrollToNext(animation.GSAP)">
+        <i class="fa fa-long-arrow-down fa-2x"></i></button>
+</div>
