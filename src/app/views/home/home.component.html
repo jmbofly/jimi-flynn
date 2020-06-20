@@ -1,14 +1,17 @@
 <section id="section1" class="hero plumb w-100" style="">
     <div class="container" style="margin-top: 7rem;">
         <div class="row">
-            <div class="hero-image">
-                <img id="portrait" src="assets/img/portrait.png" width="60" alt="" class="p-1">
-            </div>
-            <div class="mt-2">
+            <div class="mx-auto">
                 <h1 class="hero-title headline text-center pb-0 mb-0">JIMI FLYNN</h1>
-                <h1 class="hero-subtitle text-white mt-0 pt-0 text-center">
-                    <b class="text-white text-center mt-0 pt-0">designer</b>
-                </h1>
+                <p class="hero-subtitle text-white mt-0 pt-0 text-center">
+                    <b class="text-white text-center mt-0 pt-0">designer | developer | problem solver</b>
+                </p>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="hero-image mx-auto">
+                <img id="portrait" src="assets/img/portrait.png" width="70" alt="" class="p-1">
             </div>
 
         </div>
@@ -16,11 +19,11 @@
     <div class="balls-wrapper w-100 h-100">
     </div>
 </section>
-<section id="section2" class="hero bg-secondary">
+<section id="section2" class="hero cherry  bg-darken-4">
     <div class="container">
         <div class="row">
-            <div class="about-image" [style.background-image]="'url(assets/img/skyline@2x.png)'">
-                <!-- <img src="assets/img/skyline@2x.png" alt=""> -->
+            <div class="about-image">
+                <img src="assets/img/skyline@2x.png" alt="">
             </div>
         </div>
         <div class="row">
@@ -71,5 +74,5 @@
 </section>
 <div class="scroller-toggle mx-auto">
     <button class="btn btn-link text-center next-button" (click)="scrollToNext(animation.GSAP)">
-        <i class="fa fa-long-arrow-down fa-2x"></i></button>
+        <i class="fa fa-2x" [ngClass]="active > 3 ? 'fa-long-arrow-up':'fa-long-arrow-down'"></i></button>
 </div>

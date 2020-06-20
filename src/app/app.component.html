@@ -14,13 +14,20 @@
 </nav>
 
 <aside id="sidenav-wrapper" [ngClass]="showMenu ? 'open':''">
-  <nav class="nav justify-content-center">
-    <a class="nav-link active" href="#">Active link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link disabled" href="#">Disabled link</a>
-  </nav>
+  <div class="container-fluid bg-secondary h-100">
+    <div class="row">
+      <h1 class="mx-auto"><img width="300" src="assets/svg/logo.svg" alt=""></h1>
+    </div>
+    <div class="container">
+      <ul class="list-group text-center">
+        <li class="list-group-item w-100" (click)="scrollTo('#section1')">Home</li>
+        <li class="list-group-item w-100" (click)="scrollTo('#section2')">About</li>
+        <li class="list-group-item w-100" (click)="scrollTo('#section3')">Work</li>
+        <li class="list-group-item w-100" (click)="scrollTo('#section4')">Ideas</li>
+      </ul>
+    </div>
+  </div>
 </aside>
 <main id="main-wrapper">
   <router-outlet></router-outlet>
-
 </main>

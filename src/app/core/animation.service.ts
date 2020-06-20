@@ -17,10 +17,32 @@ export class AnimationService {
   GSAP = gsap;
   text = TextPlugin;
   utils = gsap.utils;
-
   D3 = d3;
-  constructor() { }
+  constructor() {
+  }
 
+  // initScroller() {
+  //   let wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+  //   let config: any = {
+  //     timeLine: [],
+  //     scrollCount: 0,
+  //   };
+  //   $(window).on('touchmove', function (e) { e.preventDefault() });
+  //   window.addEventListener(wheelEvent, e => handleWheelEvent(e), { passive: false });
+  //   // $(window).off('mousewheel');
+  //   function handleWheelEvent(e: Event | any) {
+  //     const { timeStamp, deltaY } = e;
+  //     config.timeLine.push(timeStamp),
+  //     config.scrollCount = config.timeLine.length,
+  //     config.delta = deltaY,
+  //     e.preventDefault();
+  //     const sections = ['section1', 'section2', 'section3', 'section4'];
+  //     const anchors = sections.map(name => $('#' + name).position().top);
+      
+  //     console.log(config)
+  //   }
+  // }
+  
   to(targets: gsap.DOMTarget, vars: gsap.AnimationVars) {
     return gsap.to(targets, vars);
   }
