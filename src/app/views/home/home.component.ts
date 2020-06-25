@@ -34,8 +34,9 @@ export class HomeComponent implements OnInit {
       anim: (el, vars: { duration, scrollTo }) => this.animation.GSAP.to(el, vars),
       sections: ['section1', 'section2', 'section3', 'section4'].map(name => ({name, anchor: $(`#${name}`)})),
     };
-    $(window).on('touchmove', function (e) { config.scrollEnabled = 0 ?  e.preventDefault(): 0 });
-    // $(window).off('mousewheel');
+    window.addEventListener('touchmove', function (e) {
+      e.preventDefault();
+    }, { passive: false });
     window.addEventListener(config.wheelEvent.type, e => handleWheelEvent(e), { passive: false });
     const handleWheelEvent = (e: Event | any) => {
       e.preventDefault();
@@ -131,6 +132,8 @@ export class HomeComponent implements OnInit {
   // Layout graph
   wiredLayout(el = this.animation.D3) {
     let focused = true;
+    window.addEventListener('focus', (e) => { focused = true })
+    window.addEventListener('blur', (e) => { focused = false })
     const colors = el.scaleOrdinal(el.schemeSet3);
     const setColors = (d = '') => colors(d);
     const $ = (s: string, o = document): Element => o.querySelector(s),
@@ -180,11 +183,11 @@ export class HomeComponent implements OnInit {
       .attr("gradientUnits", "userSpaceOnUse")
       .selectAll("stop")
       .data((d: any) => [
-        { offset: "0%", color: 'rgba(32, 235, 19, .7)' },
+        { offset: "0%", color: '#5fbb46' },
         { offset: "25%", color: 'rgba(210,71,75, .7)' },
-        { offset: "50%", color: 'rgba(32, 235, 19, .7)' },
+        { offset: "50%", color: '#5fbb46' },
         { offset: "75%", color: 'rgba(210,71,75, 0.75)' },
-        { offset: "100%", color: 'rgba(32, 235, 19, 0.7)' }
+        { offset: "100%", color: '#5fbb46' }
       ])
       .enter().append("stop")
       .attr("offset", (d: any) => { return d.offset; })
@@ -193,9 +196,6 @@ export class HomeComponent implements OnInit {
     // Add the valueline path.
     svg.append("path")
       .attr("class", "line");
-
-    window.addEventListener('focus', (e) => { focused = true })
-    window.addEventListener('blur', (e) => { focused = false })
 
 
     // once the arrangement is initialized, scale and translate it
@@ -232,51 +232,45 @@ export class HomeComponent implements OnInit {
     }
     function tick() {
       if (!focused) return;
-      link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
+      
+      link.attr("x1", (d: any) => d.source.x)
+        .attr("y1", (d: any) => d.source.y)
+        .attr("x2", (d: any) => d.target.x)
+        .attr("y2", (d: any) => d.target.y);
 
 
       node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y)
     }
 
-    function breakLines(node, breakAt) {
-
-    }
-
   }
 // Scroll to next section according to element id
   scrollToNext(gsap: GSAP, scrolled = false, goinDown?: boolean) {
-    $('#sidenav-wrapper').removeClass('open');
-    $('.navbarToggler').removeClass('active');
-    const tl = gsap.timeline({ease: 'expo'});
+    const tl = gsap.timeline({ease: 'power3.inOut'});
     if (scrolled) {
       if (goinDown) {
         if (this.active > 3) {
-          tl.to(window, { duration: 1, scrollTo: { y: '#section1', offsetY: 70 } });
+          tl.to(window, { duration: 1, ease: 'power3.inOut', scrollTo: { y: '#section1', offsetY: 70 } });
           this.active = 1;
           return;
         }
-        tl.to(window, { duration: 1, scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
+        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
         this.active += 1;
       } else if (!goinDown && this.active > 1) {
-        tl.to(window, { duration: 1, scrollTo: { y: "#section" + (this.active - 1), offsetY: 70 } });
+        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: "#section" + (this.active - 1), offsetY: 70 } });
         this.active -= 1;
       } else {
-        tl.to(window, { duration: 1, scrollTo: { y: '#section1', offsetY: 70 } });
+        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: '#section1', offsetY: 70 } });
         this.active = 1;
         return;
       }
 
     } else {
       if (this.active > 3) {
-        tl.to(window, { duration: 1, scrollTo: { y: '#section1', offsetY: 70 } });
+        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: '#section1', offsetY: 70 } });
         this.active = 1;
         return;
       }
-      tl.to(window, { duration: 1, scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
+      tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
       this.active += 1;
     }
   }

@@ -1,0 +1,14 @@
+.text-accent {
+    color: $accent;
+}
+
+.bg-accent {
+    background-color: $accent;
+    ;
+}
+
+.text-gradient {
+    background: -webkit-linear-gradient(180deg, $cherry, $accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

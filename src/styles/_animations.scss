@@ -1,0 +1,14 @@
+@keyframes FlyingSaucer {
+    0% {
+        transform: translate(50);
+    }
+
+    100% {
+        transform: translate(90%);
+    }
+}
+
+.flying-saucer {
+    transition: all 15s;
+    animation: FlyingSaucer infinite;
+}

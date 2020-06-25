@@ -13,17 +13,17 @@
     </ul> -->
 </nav>
 
-<aside id="sidenav-wrapper" [ngClass]="showMenu ? 'open':''">
-  <div class="container-fluid bg-secondary h-100">
+<aside id="sidenav-wrapper">
+  <div class="container-fluid h-100" style="background: #080808;">
     <div class="row">
-      <h1 class="mx-auto"><img width="300" src="assets/svg/logo.svg" alt=""></h1>
+      <div class="mx-auto logo"><img class="" width="100" src="assets/svg/logo.svg" alt=""></div>
     </div>
     <div class="container">
-      <ul class="list-group text-center">
-        <li class="list-group-item w-100" (click)="scrollTo('#section1')">Home</li>
-        <li class="list-group-item w-100" (click)="scrollTo('#section2')">About</li>
-        <li class="list-group-item w-100" (click)="scrollTo('#section3')">Work</li>
-        <li class="list-group-item w-100" (click)="scrollTo('#section4')">Ideas</li>
+      <ul class="list-group text-center mx-lg-auto mx-sm-2">
+        <li class="list-group-item">Home</li>
+        <li class="list-group-item">About</li>
+        <li class="list-group-item">Work</li>
+        <li class="list-group-item">Ideas</li>
       </ul>
     </div>
   </div>
