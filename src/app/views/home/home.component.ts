@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { gsap, TimelineMax } from "gsap";
+
 import * as $ from 'jquery';
-import { AnimationService } from 'src/app/core/animation.service';
+import * as d3 from "d3";
+
+
 import { DATA } from 'src/app/data/data';
-import { GraphService } from 'src/app/core/graph.service';
-import { style } from '@angular/animations';
+
 @Component({
   selector: 'jf-home',
   templateUrl: './home.component.html',
@@ -11,133 +14,56 @@ import { style } from '@angular/animations';
 })
 export class HomeComponent implements OnInit {
   active = 1;
+  scrollEnabled = false;
+  sections = ['section1', 'section2', 'section3', 'section4'].map(name => ({ name, anchor: `#${name}` }))
+  // TODO: Create JSON with projects metadata
+  list = DATA.nodes.filter((d,i) => i < 6);
 
-  constructor(public animation: AnimationService, private graph: GraphService) { }
 
-  private random(min, max): number {
-    return min + Math.random() * (max - min)
-  };
-  private between(min, max, percent) {
-    return max - (max - min) * (1 - percent)
-  };
+  constructor() { }
 
   // Initialize scroll navigation
-  // TODO: Disable window scrolling
-  private scrollerInit() {
-    let config: any = {
-      scrollEnable: false,
-      wheelEvent: {type: 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel', event: 0},
-      timeLine: [],
-      scrollCount: 0,
-      windowHeight: $(window).height(),
-      init: this.animation.GSAP.to(window, { duration: 1, scrollTo: { y: 0, offsetY: 70 } }),
-      anim: (el, vars: { duration, scrollTo }) => this.animation.GSAP.to(el, vars),
-      sections: ['section1', 'section2', 'section3', 'section4'].map(name => ({name, anchor: $(`#${name}`)})),
-    };
+  private initScroller() {
+    const eventType = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+    gsap.to(window, 1, { scrollTo: { y: 0, offsetY: 70 } })
     window.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, { passive: false });
-    window.addEventListener(config.wheelEvent.type, e => handleWheelEvent(e), { passive: false });
-    const handleWheelEvent = (e: Event | any) => {
-      e.preventDefault();
-      config.wheelEvent.event = e;
-      const wait = new Date(e.timeStamp).getSeconds() < new Date(config.timeLine[config.timeLine.length]).getSeconds() + 5;
-      const { timeStamp, deltaY } = e;
-      config.timeLine.push(timeStamp);
-      ++config.scrollCount;
-
-      if (!config.scrollEnabled && !wait) {
-        if (config.scrollCount > 5) {
-          if (deltaY > 0) {
-            console.log('scrolling down', config)
-            this.scrollToNext(this.animation.GSAP, true, true)
-          } else {
-            console.log('scrolling up', config)
-            this.scrollToNext(this.animation.GSAP, true, false)
-          }
-          config.scrollCount = 0;
-        }
-        
-      } 
-    }
+    window.addEventListener(eventType, e => {e.preventDefault()}, { passive: false });
   }
-
 
   ngOnInit(): void {
-    // this.animateTitle();
-    this.animateDecal();
-    this.wiredLayout(this.animation.D3);
-    this.scrollerInit();
+    
+    this.initScroller();
+    this.initHeroSection();
+    this.initProjectsSection()
   }
 
-  // Animate hero title
-  // TODO: @jmbofly Fix title animation
-  animateTitle() {
-    const tl = this.animation.timeline();
-    tl.to('.hero-subtitle', {
-      duration: 3,
-      height: '125px',
-      ease: 'elastic',
-      text: {
-        delimiter: ' ',
-        value: 'designer'
-      }
-    }).to('.hero-subtitle ', {
-      height: 0,
-      duration: 3,
-    }).to('.hero-subtitle', {
-      duration: 3,
-      height: '125px',
-      ease: 'elastic',
-      text: {
-        delimiter: ' ',
-        value: 'developer'
-      }
-    })
-      .to('.hero-subtitle ', {
-        height: 0,
-        duration: 3,
+
+  animateSVG(targets: string | string[], vars?: any, duration?: number) {
+    const master = new TimelineMax({ paused: true, reversed: true });
+    if (typeof targets === 'string') {
+      master.to(targets, duration, vars);
+    } else {
+      targets.map((target, idx, targets) => {
+        master.to(target, vars[idx]);
       })
-      .to('.hero-subtitle', {
-        duration: 3,
-        height: '125px',
-        ease: 'elastic',
-        text: {
-          delimiter: ' ',
-          value: 'problem solver'
-        }
-      })
+    }
+    return master;
   }
-
-    // Animate logo decal
-    // TODO: Finish
-  animateDecal() {
-    const tl = this.animation.timeline();
-    tl.to('div.decal', {
-      // top: '-16px',
-      scale: .5,
-      yoyo: true,
-      scrollTrigger: {
-        trigger: '#fourth',
-        start: 'top 70px',
-        pin: '.decal',
-        scrub: true
-      }
-    })
-  }
-
 
   // TODO: @jmbofly Clean up
   // TODO: Add links line breaks
+  // TODO: Generate additional links
   // Layout graph
-  wiredLayout(el = this.animation.D3) {
+  initHeroSection() {
     let focused = true;
     window.addEventListener('focus', (e) => { focused = true })
     window.addEventListener('blur', (e) => { focused = false })
-    const colors = el.scaleOrdinal(el.schemeSet3);
+    const colors = d3.scaleOrdinal(d3.schemeSet3);
     const setColors = (d = '') => colors(d);
     const $ = (s: string, o = document): Element => o.querySelector(s),
-      container = $('.balls-wrapper'),
+      container = $('.graph-wrapper'),
       numNodes = 1500,
       width = container.parentElement.offsetWidth,
       height = container.parentElement.offsetHeight,
@@ -146,23 +72,10 @@ export class HomeComponent implements OnInit {
       scale = 1.7,
       center = [width / 2 - 200, height / 2 - 200],
       rescale = isNaN(nodes[0].x),
-      svg = el.select('.balls-wrapper').append('svg:svg').attr("viewBox", `${[0, 0, width, height]}`),
-      simulation = el
-        .forceSimulation()
-        .nodes(nodes)
-        .alphaDecay(.0001)
-        .velocityDecay(.601055)
-        .force('layout', el.forceRadial(100))
-        .force('link', el.forceLink(links).distance(10).id((d: any) => d.id))
-        .force('center', el.forceCenter(width / 1.8, height / 2))
-        .force('charge', el.forceManyBody().strength((d, i) => -10 * i))
-        .force('collide', el.forceCollide().radius((d: any) => d.size).strength(-10))
-        .force("x", el.forceX(500).strength(.1))
-        .force("y", el.forceY(500).strength(.1))
-        .on("tick", tick),
+      svg = d3.select('.graph-wrapper').append('svg:svg').attr("viewBox", `${[0, 0, width, height]}`),
       link = svg.append("g")
-      .selectAll("line")
-      .data(links)
+        .selectAll("line")
+        .data(links)
         .join("line")
         .attr("stroke-opacity", .7)
         .attr('class', 'line')
@@ -172,22 +85,37 @@ export class HomeComponent implements OnInit {
         .enter()
         .data(nodes)
         .join("circle")
-        .attr("r", 5)
-        .attr('fill', (d: any) => setColors())
-        .call(drag(simulation));
-    const x = el.range(width);
-    const y = el.range(height);
+        .attr("r", 1.5)
+        .attr('fill', (d: any) => setColors());
+    setTimeout(() => {
+      const simulation = d3
+        .forceSimulation()
+        .nodes(nodes)
+        .alphaDecay(.0001)
+        .velocityDecay(.9001055)
+        .force('layout', d3.forceRadial(100))
+        .force('link', d3.forceLink(links).distance(10).id((d: any) => d.id))
+        .force('center', d3.forceCenter(width / 1.8, height / 2))
+        .force('charge', d3.forceManyBody().strength((d, i) => -10 * i))
+        .force('collide', d3.forceCollide().radius((d: any) => d.size).strength(-10))
+        .force("x", d3.forceX(500).strength(.1))
+        .force("y", d3.forceY(500).strength(.1)).on("tick", tick)
+      node.call(drag(simulation));
+      
+    }, 5000)
+    const x = d3.range(width);
+    const y = d3.range(height);
 
     svg.append("linearGradient")
       .attr("id", "line-gradient")
       .attr("gradientUnits", "userSpaceOnUse")
       .selectAll("stop")
       .data((d: any) => [
-        { offset: "0%", color: '#5fbb46' },
-        { offset: "25%", color: 'rgba(210,71,75, .7)' },
-        { offset: "50%", color: '#5fbb46' },
-        { offset: "75%", color: 'rgba(210,71,75, 0.75)' },
-        { offset: "100%", color: '#5fbb46' }
+        { offset: "0%", color: '#5fbb460E' },
+        { offset: "25%", color: 'rgba(210,71,75, .3)' },
+        { offset: "50%", color: '#5fbb460E' },
+        { offset: "75%", color: 'rgba(210,71,75, 0.3)' },
+        { offset: "100%", color: '#5fbb460E' }
       ])
       .enter().append("stop")
       .attr("offset", (d: any) => { return d.offset; })
@@ -196,7 +124,6 @@ export class HomeComponent implements OnInit {
     // Add the valueline path.
     svg.append("path")
       .attr("class", "line");
-
 
     // once the arrangement is initialized, scale and translate it
     if (rescale) {
@@ -209,70 +136,61 @@ export class HomeComponent implements OnInit {
     function drag(sim, isNode?) {
 
       function dragstarted(d) {
-        if (!el.event.active) sim.alphaTarget(0.3).restart();
+        if (!d3.event.active) sim.alphaTarget(0.3).restart();
         d.fx = d.x;
         d.fy = d.y;
       }
 
       function dragged(d) {
-        d.fx = el.event.x;
-        d.fy = el.event.y;
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
       }
 
       function dragended(d) {
-        if (!el.event.active) sim.alphaTarget(0);
+        if (!d3.event.active) sim.alphaTarget(0);
         d.fx = null;
         d.fy = null;
       }
 
-      return el.drag()
+      return d3.drag()
         .on("start", dragstarted)
         .on("drag", dragged)
         .on("end", dragended);
     }
     function tick() {
       if (!focused) return;
-      
-      link.attr("x1", (d: any) => d.source.x)
-        .attr("y1", (d: any) => d.source.y)
-        .attr("x2", (d: any) => d.target.x)
-        .attr("y2", (d: any) => d.target.y);
-
-
-      node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y)
+        link.attr("x1", (d: any) => d.source.x)
+          .attr("y1", (d: any) => d.source.y)
+          .attr("x2", (d: any) => d.target.x)
+          .attr("y2", (d: any) => d.target.y);
+  
+  
+        node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y)
+        
     }
 
   }
-// Scroll to next section according to element id
-  scrollToNext(gsap: GSAP, scrolled = false, goinDown?: boolean) {
-    const tl = gsap.timeline({ease: 'power3.inOut'});
-    if (scrolled) {
-      if (goinDown) {
-        if (this.active > 3) {
-          tl.to(window, { duration: 1, ease: 'power3.inOut', scrollTo: { y: '#section1', offsetY: 70 } });
-          this.active = 1;
-          return;
-        }
-        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
-        this.active += 1;
-      } else if (!goinDown && this.active > 1) {
-        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: "#section" + (this.active - 1), offsetY: 70 } });
-        this.active -= 1;
-      } else {
-        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: '#section1', offsetY: 70 } });
-        this.active = 1;
-        return;
-      }
 
-    } else {
-      if (this.active > 3) {
-        tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: '#section1', offsetY: 70 } });
-        this.active = 1;
-        return;
-      }
-      tl.to(window, { duration: 1,ease: 'power3.inOut', scrollTo: { y: "#section" + (this.active + 1), offsetY: 70 } });
+  // Section 2 layout
+  initProjectsSection(scrollTop?: number) {
+    if (!gsap || scrollTop < $('#section2').scrollTop()) return;
+    const projects = this.list.map((item, idx) => ({title: item.id, img: item.group + gsap.utils.random(1, 500)}))
+  }
+
+// Scroll to section
+  private scroll(tl, y) {
+    return tl.to(window, { duration: 1, ease: 'power3.inOut', scrollTo: { y, offsetY: 70 } });
+
+  }
+  scrollToNext(dir: 'up' | 'down') {
+    if (dir === 'down' && this.active < 4) {
       this.active += 1;
-    }
+    } else if (dir === 'up' && this.active > 1) {
+      this.active -= 1;
+    } else return;
+    const tl = new TimelineMax({ease: 'power3.inOut(.5,1)'});
+    const anchor = this.sections[this.active - 1].anchor;
+    this.scroll(tl, anchor);
   }
 
 }

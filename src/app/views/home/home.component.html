@@ -1,13 +1,16 @@
-<section id="section1" class="hero plumb w-100" style="">
+
+
+<!-- Start Hero Section -->
+<section id="section1" #section class="hero plumb w-100" style="">
     <div class="container" style="margin-top: 7rem;">
         <div class="row">
             <div class="mx-auto">
                 <h1 class="hero-title headline text-center pb-0 mb-0">JIMI FLYNN</h1>
-                <p class="hero-subtitle text-white mt-0 pt-0 text-center">
+                <p data-aos="fade-up" data-aos-delay="'13s'" class="hero-subtitle text-white mt-0 pt-0 text-center">
                     <b class="text-white text-center mt-0 pt-0">designer | developer | problem solver</b>
                 </p>
             </div>
-            
+
         </div>
         <div class="row">
             <div class="hero-image mx-auto">
@@ -15,53 +18,52 @@
             </div>
 
         </div>
-    </div>
-    <div class="balls-wrapper w-100 h-100">
-    </div>
-</section>
-<section id="section2" class="hero cherry  bg-darken-4">
-    <div class="container">
         <div class="row">
-            <div class="skyline-image">
-                <img src="assets/img/skyline@2x.png" alt="">
+            <div class="hero-list">
+                <ul>
+                    <li>list item</li>
+                    <li>list item</li>
+                    <li>list item</li>
+                    <li>list item</li>
+                </ul>
             </div>
-        </div>
-        <div class="row">
-            <div class="mx-auto">
-                <h3 class="text-accent headline text-center pb-0 mb-0">The Deets</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="saucer-wrapper animated" data-aos="slideInRight"><img width="100" src="assets/svg/saucer.svg" alt=""></div>
-        </div>
-        
-    </div>
-</section>
-<section id="section3" class="hero kale">
-    <div class="container">
-        <div class="row">
             
         </div>
-        <div class="row">
-            <div class="mx-auto">
-                <h3 class="lead text-primary text-center">Some text here.</h3>
-
-            </div>
-        </div>
-
     </div>
-    <div class="d-flex">
-        <div class="decal justify-content-center">
-            <div class="outline-box">
-                <!-- <div class="gradient-box"></div> -->
+    <div class="graph-wrapper w-100 h-100">
+    </div>
+</section>
+<!-- End -->
+<!-- Start Projects Section -->
+<section id="section2" class="hero cherry projects">
+    <div class="container">
+        <div class="row">
+            <h1 class="text-accent text-center mt-md-3 mt-sm-1 col-12">Projects</h1>
+        </div>
+        <div class="row clip font-sm opacity" id="project_gallery">
+            <div *ngFor="let item of list; let i = index;" class="wrapper col-md-6 col-lg-3">
+                <div class="clip-text clip-text--cover m-1 py-3 px-2" [style.background-image]="'url(https://picsum.photos/id/' + i * 10 + '/350?random=' + i + 1 + ')'">TITLE</div>
             </div>
         </div>
+
+        <!-- <div class="skyline-image">
+            <img [src]="section.clientWidth < 760 ? 'assets/img/skyline.png':'assets/img/skyline@2x.png'"
+                class="img-fluid" alt="">
+        </div>
+        <div class="spacer"></div> -->
+    </div>
+</section>
+<!-- Start Bio Section -->
+<section id="section3" class="hero clip opacity font-lg no-border">
+    <div class="wrapper">
+        <div class="clip-text clip-text--cover" style="width: 100%;height: 100vh;"
+            [style.background-image]="'url(assets/img/galaxy.jpg)'"><b data-aos="fade-up">JF</b></div>
     </div>
 </section>
 <section id="section4" class="hero orange">
     <div class="container">
         <div class="row">
-            
+
         </div>
         <div class="row">
             <div class="mx-auto">
@@ -72,7 +74,19 @@
 
     </div>
 </section>
-<div class="scroller-toggle mx-auto">
-    <button class="btn btn-link text-center next-button" (click)="scrollToNext(animation.GSAP)">
-        <i class="fa fa-2x" [ngClass]="active > 3 ? 'fa-long-arrow-up':'fa-long-arrow-down'"></i></button>
+
+<!-- Start Home Navigation  -->
+<div class="scroller-toggle-wrapper">
+    <div class="row justify-content-center">
+        <div class="scroller-toggle">
+            <span>PREV</span>
+            <button class="btn btn-link text-center next-button" [disabled]="active < 2" (click)="scrollToNext('up')">
+                <i class="fa fa-2x fa-long-arrow-up"></i></button>
+        </div>
+        <div class="scroller-toggle">
+            <span>NEXT</span>
+            <button class="btn btn-link text-center prev-button" [disabled]="active > 3" (click)="scrollToNext('down')">
+                <i class="fa fa-2x fa-long-arrow-down"></i></button>
+        </div>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand fixed-top bg-primary">
+<nav class="navbar navbar-expand fixed-top plumb">
   <!-- Navbar Toggler -->
   <div class="classy-navbar-toggler" role="button" (click)="toggleMenu()">
     <span class="navbarToggler" [ngClass]="showMenu ? 'active':''"><span></span><span></span><span></span></span>
@@ -14,20 +14,49 @@
 </nav>
 
 <aside id="sidenav-wrapper">
-  <div class="container-fluid h-100" style="background: #080808;">
-    <div class="row">
-      <div class="mx-auto logo"><img class="" width="100" src="assets/svg/logo.svg" alt=""></div>
-    </div>
     <div class="container">
-      <ul class="list-group text-center mx-lg-auto mx-sm-2">
-        <li class="list-group-item">Home</li>
-        <li class="list-group-item">About</li>
-        <li class="list-group-item">Work</li>
-        <li class="list-group-item">Ideas</li>
-      </ul>
+      <div class="col-12">
+        <div class="mx-auto logo">
+          <img class="" width="100" src="assets/svg/logo.svg" alt="">
+        </div>
+      </div>
+      <div class="Menu">
+        <ul class="Menu-list">
+          <li class="Menu-list-item">
+            Home
+            <span class="Mask"><span>Home</span></span>
+            <span class="Mask"><span>Home</span></span>
+          </li>
+          <li class="Menu-list-item">
+            About
+            <span class="Mask"><span>About</span></span>
+            <span class="Mask"><span>About</span></span>
+          </li>
+          <li class="Menu-list-item">
+            Work
+            <span class="Mask"><span>Work</span></span>
+            <span class="Mask"><span>Work</span></span>
+          </li>
+          <li class="Menu-list-item">
+            Contact
+            <span class="Mask"><span>Contact</span></span>
+            <span class="Mask"><span>Contact</span></span>
+          </li>
+        </ul>
+      </div>
+
     </div>
-  </div>
+    
 </aside>
 <main id="main-wrapper">
   <router-outlet></router-outlet>
 </main>
+<div id="loader" class="clip font-sm no-border">
+  <h1 data-aos="fade-down" data-aos-delay="350" class="w-100 text-center text-gradient">Hi! I'm Jimi.</h1>
+  <img src="assets/svg/loader.svg" class="loader" alt="" width="50">
+  
+  <div class="wrapper">
+    <div class="clip-text clip-text--cover"
+      [style.background-image]="'url(assets/img/galaxy.jpg)'"><span>ONE MOMENT...</span></div>
+  </div>
+</div>

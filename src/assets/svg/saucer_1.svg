@@ -1,0 +1,118 @@
+<svg id="saucer_svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 739.5 2654.34">
+                    <defs>
+                        <style>
+                            .cls-1 {
+                                fill: url(#tractor_gradient);
+                            }
+
+                            .cls-2 {
+                                fill: #202020;
+                            }
+
+                            .cls-2,
+                            .cls-3,
+                            .cls-4,
+                            .cls-7,
+                            .cls-8 {
+                                stroke: #000;
+                                stroke-miterlimit: 10;
+                            }
+
+                            .cls-3,
+                            .cls-4 {
+                                fill: #888;
+                            }
+
+                            .cls-3 {
+                                stroke-width: 3px;
+                            }
+
+                            .cls-4 {
+                                stroke-width: 4px;
+                            }
+
+                            .cls-5 {
+                                fill: #5fbb46;
+                            }
+
+                            .cls-6 {
+                                fill: #d0d0d0;
+                            }
+
+                            .cls-7 {
+                                fill: none;
+                            }
+
+                            .cls-8 {
+                                fill: #6d6b62;
+                            }
+
+                            .beam-line {
+                                fill: none;
+                                stroke: rgba(0, 0, 0, .333);
+                                stroke-width: 3px;
+                            }
+                        </style>
+                        <linearGradient id="tractor_gradient" x1="100%" y1="100%">
+                            <stop offset="0%" stop-color="#d2e766" stop-opacity=".5">
+                                <animate attributeName="stop-color" values="#d2e766;white;#d2e766;white;#d2e766;"
+                                    dur="5s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" stop-color="#d2e766" stop-opacity=".5">
+                                <animate attributeName="stop-color" values="white;#d2e766;white;#d2e766;white;" dur="5s"
+                                    repeatCount="indefinite" />
+                                <animate attributeName="offset" values=".95;.80;.60;.40;.20;0;.20;.40;.60;.80;.95"
+                                    dur="5s" repeatCount="indefinite" />
+                            </stop>
+                        </linearGradient>
+                    </defs>
+                    <title>saucer_1</title>
+                    <g id="Layer_2" data-name="Layer 2">
+                        <g id="saucer">
+                            <g id="tractor_beam">
+                                <path class="cls-1"
+                                    d="M283.85,236.42,182.5,2618.49c122.53,48.56,253.79,47,393,0L440.6,232.31Z" />
+                                <g id="beam_line">
+                                    <line class="beam-line" x1="515.5" y1="2556.49" x2="402.5" y2="381.49" />
+
+                                    <line class="beam-line" x1="234.5" y1="2556.49" x2="323.5" y2="367.49" />
+                                </g>
+                            </g>
+                            <g id="ship">
+                                <path id="bottom" class="cls-2"
+                                    d="M620.08,343.49H80.66l175.08,58.58a483.82,483.82,0,0,0,220.83-2.93Z" />
+                                <ellipse id="body_bottom" class="cls-3" cx="369.75" cy="262.57" rx="367.75"
+                                    ry="128.1" />
+                                <ellipse id="body_top" class="cls-4" cx="369.75" cy="253.59" rx="367.75" ry="128.1" />
+                                <g id="dome">
+                                    <path class="cls-5"
+                                        d="M350.5,251.59c-39.67,0-76.62-6.54-104-18.4C225.28,224,200,207.22,200,179.32,200,81.54,267.53,2,350.5,2S501,81.54,501,179.32c0,27.9-25.25,44.69-46.44,53.87C427.13,245.05,390.18,251.59,350.5,251.59Z" />
+                                    <path
+                                        d="M350.5,4C390,4,427.25,22.15,455.28,55.11,483.46,88.26,499,132.37,499,179.32c0,26.81-24.6,43.1-45.24,52-27.16,11.76-63.83,18.24-103.24,18.24s-76.07-6.48-103.24-18.24c-20.63-8.93-45.24-25.22-45.24-52,0-46.95,15.53-91.06,43.71-124.21C273.76,22.15,311,4,350.5,4m0-4C266.29,0,198,80.28,198,179.32c0,49.51,76.24,74.27,152.48,74.27S503,228.83,503,179.32C503,80.28,434.72,0,350.5,0Z" />
+                                </g>
+                                <g id="reflection">
+                                    <path class="cls-6"
+                                        d="M400.11,62.16c42,20.18,65.32,59.19,81,106-8.88-49.65-23.2-94.62-59-121.09Z" />
+                                    <path class="cls-6"
+                                        d="M409.8,40.21c-4.72-4.72-12.56-11.49-22-11.53L367.34,42.83l21,12.58Z" />
+                                </g>
+                                <g id="lines">
+                                    <path id="body_line" class=" body-line cls-7"
+                                        d="M194,185.25C145.71,184.79,86.13,196,18.65,215.37" />
+                                    <path id="body_line-2" data-name="body_line" class=" body-line cls-7"
+                                        d="M207.49,221.18c-55.23,23.35-106,56.8-153.28,98.23" />
+                                    <line id="body_line-3" data-name="body_line" class=" body-line cls-8" x1="283.85"
+                                        y1="252.62" x2="234.44" y2="371.65" />
+                                    <line id="body_line-4" data-name="body_line" class=" body-line cls-8" x1="389.4"
+                                        y1="261.6" x2="434.32" y2="380.63" />
+                                    <line id="body_line-5" data-name="body_line" class=" body-line cls-8" x1="481.48"
+                                        y1="241.39" x2="640.93" y2="335.72" />
+                                    <path id="body_line-6" data-name="body_line" class=" body-line cls-7"
+                                        d="M515.17,192A1046.77,1046.77,0,0,1,737.5,252.62" />
+                                    <line id="body_line-7" data-name="body_line" class=" body-line cls-8" x1="515.17"
+                                        y1="153.81" x2="575.47" y2="147.39" />
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </svg>

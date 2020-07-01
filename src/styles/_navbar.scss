@@ -1,0 +1,46 @@
+.navbar {
+    height: 70px !important;
+    z-index: 999 !important;
+    box-shadow: $box-shadow;
+}
+
+.classy-navbar-toggler {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.classy-navbar-toggler .navbarToggler {
+    display: inline-block;
+    cursor: pointer
+}
+
+.classy-navbar-toggler .navbarToggler span {
+    position: relative;
+    background: linear-gradient(180deg, $primary, $peach);
+    border-radius: 3px;
+    display: block;
+    height: 3px;
+    margin-top: 8px;
+    padding: 0;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    width: 50px;
+    cursor: pointer
+}
+
+.classy-navbar-toggler .navbarToggler.active span:nth-of-type(1) {
+    -webkit-transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg);
+    top: 8px
+}
+
+.classy-navbar-toggler .navbarToggler.active span:nth-of-type(2) {
+    opacity: 0
+}
+
+.classy-navbar-toggler .navbarToggler.active span:nth-of-type(3) {
+    -webkit-transform: rotate3d(0, 0, 1, -45deg);
+    transform: rotate3d(0, 0, 1, -45deg);
+    top: -13px
+}

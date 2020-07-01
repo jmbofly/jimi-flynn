@@ -1,14 +1,41 @@
-@keyframes FlyingSaucer {
+
+
+@keyframes RotateClockwise {
     0% {
-        transform: translate(50);
+        transform: rotate(0);
     }
 
     100% {
-        transform: translate(90%);
+        transform: rotate(5020deg);
     }
 }
 
-.flying-saucer {
-    transition: all 15s;
-    animation: FlyingSaucer infinite;
+@keyframes RotateCounterClockwise {
+    0% {
+        transform: rotateZ(0);
+    }
+
+    100% {
+        transform: rotateZ(5020deg);
+    }
+}
+
+@keyframes LiftCannon {
+    0% {
+        transform: rotateZ(0);
+    }
+
+    100% {
+        transform: rotateZ(-20deg);
+    }
+}
+
+@keyframes LowerCannon {
+    0% {
+        transform: rotateZ(-20deg);
+    }
+    
+    100% {
+        transform: rotateZ(0);
+    }
 }

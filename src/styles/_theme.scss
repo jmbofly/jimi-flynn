@@ -1,0 +1,54 @@
+.plumb {
+    background: $gradient-primary no-repeat fixed;
+}
+
+.cherry {
+    background: $gradient-alternate no-repeat fixed;
+}
+
+.kale {
+    background: $gradient-dark no-repeat fixed;
+}
+
+.orange {
+    background: $gradient-secondary no-repeat fixed;
+}
+
+.bg-primary {
+    background: $plumb;
+    color: $light;
+}
+
+.bg-secondary {
+    background: $secondary;
+    color: $light;
+}
+
+.bg-alternate {
+    background: $alternate;
+    color: $dark;
+}
+
+.bg-dark {
+    background: $dark;
+    color: $dark;
+}
+
+.bg-light {
+    background: $plumb;
+    color: $secondary;
+}
+
+.text-accent {
+    color: $accent;
+}
+
+.bg-accent {
+    background-color: $accent;
+}
+
+.text-gradient {
+    background: -webkit-linear-gradient(180deg, $cherry, $accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

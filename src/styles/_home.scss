@@ -1,14 +1,65 @@
-.text-accent {
-    color: $accent;
+.hero-list {
+    width: 100vw;
+
+    ul {
+        margin: 0 auto;
+        list-style: none !important;
+
+        li {
+            margin: 1em auto;
+            color: $light;
+            background-color: transparent;
+        }
+    }
 }
 
-.bg-accent {
-    background-color: $accent;
-    ;
+#tank1 {
+    width: 100px;
+    height: 150px;
+    position: absolute;
+    bottom: 10rem;
+    transform-origin: bottom;
+    transform: translate3d(0, 0, 0);
+
+    .tank-gear {
+        transform: rotate(0);
+        transform-box: fill-box !important;
+        transform-origin: center;
+
+        &.clockwise {
+            -webkit-animation: RotateClockwise 20s;
+            animation: RotateClockwise 20s;
+        }
+
+        &.counter-clockwise {
+            -webkit-animation: RotateClockwise 20s;
+            animation: RotateClockwise 20s;
+        }
+    }
+
+    .tank-cannon {
+        // transform: rotate(0);
+        // transform-box: fill-box !important;
+        // transform-origin: left 0 !important;
+
+        &.raise {
+            -webkit-animation: LiftCannon 5s;
+            animation: LiftCannon 5s;
+        }
+
+        &.lower {
+            -webkit-animation: LowerCannon 5s;
+            animation: LowerCannon 5s;
+        }
+    }
 }
 
-.text-gradient {
-    background: -webkit-linear-gradient(180deg, $cherry, $accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.tank-fireball {
+    position: absolute;
+    opacity: 0;
+    background-color: yellow;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    bottom: 5rem;
 }

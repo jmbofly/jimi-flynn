@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { ViewsModule } from './views/views.module';
 
+
 @NgModule({
   declarations: [
     AppComponent

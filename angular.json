@@ -31,8 +31,7 @@
               "src/styles/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.slim.js",
-              "node_modules/aos/dist/aos.js"
+               "node_modules/aos/dist/aos.js"
             ]
           },
           "configurations": {

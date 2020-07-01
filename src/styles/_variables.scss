@@ -1,3 +1,5 @@
+// @import '~bootstrap/scss/variables.scss';
+
 $kale: rgb(47, 56, 59);
 $plumb: rgb(91, 32, 85);
 $cherry: rgb(169, 44, 73);
@@ -6,4 +8,12 @@ $peach: rgb(251, 121, 99);
 $neo-green: #5fbb46;
 $primary: $plumb;
 $secondary: $orange;
+$alternate: $cherry;
 $accent: $neo-green;
+$dark: #131313;
+$light: #e4e4e4; 
+$gradient-primary: linear-gradient(210deg,  $dark, darken($primary, 8));
+$gradient-secondary: linear-gradient(210deg, $secondary, $primary);
+$gradient-alternate: linear-gradient(210deg, $secondary, $alternate);
+$gradient-dark: linear-gradient(210deg, $kale, $dark);
+$gradient-light: linear-gradient(210deg, $accent, $light);
