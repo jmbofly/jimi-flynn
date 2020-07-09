@@ -20,10 +20,8 @@ gsap.registerPlugin(CSSRulePlugin, Draggable, EaselPlugin, MotionPathPlugin, Tex
 })
 export class AppComponent implements OnInit {
   //TODO: Fix responsive sidenav
-  title = 'jimi-flynn';
+  title = 'Jimi Flynn | Developer | Designer | Problem Solver';
   showMenu = false;
-  loaderText = '';
-  isLoading: boolean = false;
   constructor() {
   }
 
@@ -38,28 +36,27 @@ export class AppComponent implements OnInit {
   }
 
   private loading() {
-    
-    const text = 'LOADING...';
     const loader = $('#loader .clip-text');
-    const tl = gsap.timeline();
-    tl.set(loader, { backgroundPositionX: '-150vw' });
-    this.isLoading = true;
-    tl.to(loader, {
-      delay: 1.25,
+    const tl = new TimelineMax();
+    tl.set(loader, { backgroundPositionX: '-250vw', opacity: 1 });
+    tl.to(loader, 6, {
+      delay: 1,
       backgroundPositionX: '0',
-      duration: 5,
       ease: 'circ',
       onComplete: () => {
-        tl.to('#loader', {
-          duration: .75,
-          ease: 'sine',
+        tl.to('#loader', 1, {
+          ease: 'power3.inOut(1,0)',
           top: '100vh',
-          onComplete: (self) => {
-            tl.to($('.scroller-toggle-wrapper'), .75, { opacity: 1 });
-            tl.to($('#loader'), .25, { display: 'none' }, '>1');
-          }
-        }, '+=1');
-        this.isLoading = false;
+          opacity: 0,
+        }, '+=.1')
+          .to(loader, .25, { opacity: 0 })
+          .to('#portrait > *', .5, {
+            ease: 'linear',
+            stagger: .1,
+            strokeDashoffset: 0,
+          })
+          .to('.scroll-down-text', 1, {opacity: 1})
+          .to($('.scroller-toggle-wrapper'), .35, { bottom: '3rem', opacity: 1 }, '>')
       }
     });
   }
@@ -67,7 +64,7 @@ export class AppComponent implements OnInit {
   
   toggleMenu() {
     this.showMenu = !this.showMenu;
-    const tl = gsap.timeline();
+    const tl = new TimelineMax();
     tl.fromTo('#sidenav-wrapper', {
       transform: this.showMenu ? 'translateX(-100vw)': 'translateX(0)'
     },
@@ -79,7 +76,7 @@ export class AppComponent implements OnInit {
   }
 
   scrollTo(id: string) {
-    gsap.to(window, { scrollTo: { y: id, offsetY: 70 } });
+    return new TimelineMax().to(window, { scrollTo: { y: id, offsetY: 70 } });
   }
 }
 

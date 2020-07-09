@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'variables';
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~font-awesome/css/font-awesome.css';
 @import '~aos/dist/aos.css';
-@import '~animate.css/animate.css';
-@import 'variables';
-@import 'theme';
 @import 'animations';
+@import 'theme';
+@import 'loader';
+@import 'slider';
 @import 'navbar';
 @import 'sidenav';
 @import 'home';
@@ -20,58 +21,6 @@ body {
     }
 }
 
-#loader {
-    z-index: 1009;
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-    transition: opacity 1s ease-out;
-
-    h1 {
-        position: absolute;
-        font-size: 8em;
-        margin-top: 100px;
-        z-index: 2000;
-
-        @include media-breakpoint-down(sm) {
-            font-size: 4em;
-        }
-    }
-
-    img.loader {
-        position: absolute;
-        bottom: 3rem;
-        left: calc(100vw / 2 - 25px);
-    }
-
-
-
-    .wrapper {
-        .clip-text {
-            height: 100vh;
-            padding-top: calc(100vh / 2 - 3rem);
-
-            span {
-                font-size: 4rem;
-
-                @include media-breakpoint-down(sm) {
-                    padding-top: calc(100vh / 2 - 20px);
-                    font-size: 40px;
-                }
-            }
-
-            &:after {
-                background-color: $dark;
-            }
-        }
-    }
-
-}
 
 .graph-wrapper svg {
     top: 0;
@@ -93,12 +42,12 @@ body {
     z-index: 1010;
     position: fixed !important;
     width: 300px;
-    height: 100px;
-    bottom: 3rem;
+    height: 50px;
+    bottom: -100px;
     left: calc(50vw - 150px);
 
     .scroller-toggle {
-        
+
         span {
             transition: all .35s ease-out;
             color: rgba(255, 255, 255, .3);
@@ -112,11 +61,14 @@ body {
     .btn {
         border: 1px solid rgba(255, 255, 255, .5);
         border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        ;
         background: transparent;
         transition: all .35s ease-out;
         color: rgba(255, 255, 255, .5);
         margin: 0 .5em;
-        padding: 16px 25px;
+        // padding: 16px 25px;
         font-weight: 100;
 
         &:hover {
@@ -162,10 +114,12 @@ body {
     .hero-title {
         z-index: 2000 !important;
         font-size: 8em;
-        background: -webkit-linear-gradient(180deg, $cherry, $accent);
+        opacity: 0; 
+        margin-top: -25vh;
+        background: linear-gradient(210deg, $light, lighten($primary, 50));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        transition: all .5s ease-in-out;
+        // transition: all .5s ease-in-out;
 
         @include media-breakpoint-down(sm) {
             font-size: 4em;
@@ -173,9 +127,11 @@ body {
     }
 
     .hero-subtitle {
+        opacity: 0;
+        transform: scale(0);
         z-index: 1000 !important;
         overflow: hidden;
-        transition: all .5s ease-in-out;
+        // transition: all .5s ease-in-out;
     }
 
     .hero-image {
@@ -184,57 +140,20 @@ body {
 
     }
 
-    .skyline-image {
-        position: absolute !important;
-        bottom: 200px;
-        overflow: hidden;
-
-        @include media-breakpoint-down(sm) {
-            bottom: 235px;
-            left: -35px;
-            right: -35px;
-        }
+    .scroll-down-text {
+        opacity: 0;
     }
 
-    .spacer {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 250px;
-        width: 100vw;
-        background: #2C3242;
-    }
-
-    .saucer-wrapper {
-        position: absolute;
-        z-index: 999;
-        bottom: 20vh;
-
-        svg {
-            width: 5rem;
-
-            @include media-breakpoint-down(sm) {
-                width: 30px;
-            }
-        }
-    }
 }
 
-.projects {
-    .clip-text {
-        height: 200px;
-        line-height: -1;
-    }
-}
+.projects {}
 
-.clip {
-    .wrapper {
-        text-align: center;
-    }
+.clip-wrapper {
+    text-align: center;
 
     /* Clip text element */
     .clip-text {
-        font-size: 3em;
+        // font-size: 3em;
         font-weight: bold;
         // line-height: 0;
         position: relative;
@@ -271,7 +190,7 @@ body {
         right: .125em;
         bottom: .125em;
         left: .125em;
-        background-color: $primary;
+        background-color: rgba(91, 32, 85, .6);
     }
 
     .clip-text--cover,
@@ -310,38 +229,39 @@ body {
     }
 }
 
-.decal {
-    position: absolute;
-    transform: rotate(315deg) scale(3);
-    left: calc(50% - 75px);
-    bottom: -88px;
-    width: 175px;
-    height: 175px;
-    border: #fff solid 15px;
-    background-color: transparent;
-    box-shadow: $box-shadow;
-    z-index: 1000;
 
-    .outline-box {
-        width: 160px;
-        height: 160px;
-        transform-origin: left;
-        box-sizing: content-box;
-        transform: translate(-8px, -8px);
-        border: 1px $cherry dashed;
-        background-color: transparent;
-        // transform: rotate(315deg);
-        z-index: 1001;
-    }
+// .decal {
+//     position: absolute;
+//     transform: rotate(315deg) scale(3);
+//     left: calc(50% - 75px);
+//     bottom: -88px;
+//     width: 175px;
+//     height: 175px;
+//     border: #fff solid 15px;
+//     background-color: transparent;
+//     box-shadow: $box-shadow;
+//     z-index: 1000;
 
-    .gradient-box {
-        height: 100px;
-        width: 100px;
-        margin: 30px;
-        // transform: translate(315deg);
-        background: linear-gradient(45deg, rgb(91, 32, 85), rgb(47, 22, 59));
-    }
-}
+//     .outline-box {
+//         width: 160px;
+//         height: 160px;
+//         transform-origin: left;
+//         box-sizing: content-box;
+//         transform: translate(-8px, -8px);
+//         border: 1px $cherry dashed;
+//         background-color: transparent;
+//         // transform: rotate(315deg);
+//         z-index: 1001;
+//     }
+
+//     .gradient-box {
+//         height: 100px;
+//         width: 100px;
+//         margin: 30px;
+//         // transform: translate(315deg);
+//         background: linear-gradient(45deg, rgb(91, 32, 85), rgb(47, 22, 59));
+//     }
+// }
 
 #details_list {
     height: 50vh;
@@ -351,4 +271,11 @@ body {
         background: transparent !important;
         cursor: pointer;
     }
+}
+
+#portrait>* {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    stroke: lighten($primary, 50) !important;
+
 }
