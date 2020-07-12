@@ -58,19 +58,20 @@ export class SliderComponent implements OnInit {
   }
 
   initControls() {
-    $(".controls-list li").click(function () {
-      var delay = 0.05,
+    $(".controls-list li").on('click',function () {
+      let delay = 0.05,
         init = 1;
-      var li_ind = $(this).index();
-      var li_ind_prev = $(".active").index();
-      var li_length = $(this).length;
-      var li_diff = li_ind - $(".active").index();
-      var dur = Math.abs(li_diff);
-      var left_pos = $(this).position().left + 7;
+      let li_ind = $(this).index();
+      let li_ind_prev = $(".active").index();
+      let li_length = $(this).length;
+      let li_diff = li_ind - $(".active").index();
+      let dur = Math.abs(li_diff);
+      let left_pos = $(this).position().left + 7;
+      let i = 0;
       $("#from-move").css({ left: left_pos });
 
       if (li_diff > 0) {
-        for (let i = li_ind_prev; i < li_ind; i++) {
+        for (i = li_ind_prev; i < li_ind; i++) {
           dur = delay * init;
           $("#controls-list")
             .find("li")
@@ -80,7 +81,7 @@ export class SliderComponent implements OnInit {
           init = init + 1;
         }
       } else {
-        for (let i = li_ind_prev; i > li_ind; i--) {
+        for (i = li_ind_prev; i > li_ind; i--) {
           dur = delay * init;
           $("#controls-list")
             .find("li")
@@ -106,7 +107,8 @@ export class SliderComponent implements OnInit {
       );
       $(".controls-list li").bind(
         "animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",
-        function () {
+        function (el) {
+          console.log(el)
           $(".controls-list li")
             .removeClass("animate-right")
             .removeAttr("style");

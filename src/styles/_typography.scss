@@ -1,0 +1,96 @@
+// @import url(https://fonts.googleapis.com/css?family=Open+Sans:400|Raleway:300);
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-align: center;
+    font-family: 'Days One', sans-serif;
+}
+
+p, span, small, a, li {
+    font-family: 'Roboto', sans-serif;
+}
+
+.clip-wrapper {
+    text-align: center;
+
+    /* Clip text element */
+    .clip-text {
+        // font-size: 3em;
+        font-weight: bold;
+        // line-height: 0;
+        position: relative;
+        text-align: center;
+        /* Color fallback */
+        color: transparent;
+
+        -webkit-background-clip: text, border;
+
+        -webkit-text-fill-color: transparent;
+    }
+
+    .clip-text:before,
+    .clip-text:after {
+        position: absolute;
+        content: '';
+    }
+
+    /* Background */
+    .clip-text:before {
+        z-index: -2;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: inherit;
+    }
+
+    /* Text Background (black zone) */
+    .clip-text:after {
+        position: absolute;
+        z-index: -1;
+        top: .125em;
+        right: .125em;
+        bottom: .125em;
+        left: .125em;
+        background-color: rgba(91, 32, 85, .6);
+    }
+
+    .clip-text--cover,
+    .clip-text--cover:before {
+        background-repeat: no-repeat;
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-position: 50% 50%;
+    }
+
+    &.opacity {
+        .clip-text:after {
+            background-color: transparentize($color: $primary, $amount: .2);
+        }
+    }
+
+    &.font-lg {
+        .clip-text {
+            font-size: 15em;
+        }
+    }
+
+    &.font-sm {
+        .clip-text {
+            font-size: 3em;
+        }
+    }
+
+    &.no-border {
+        .clip-text:after {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    }
+}

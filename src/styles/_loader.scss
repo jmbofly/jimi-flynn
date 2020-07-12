@@ -8,14 +8,18 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 50%;
-    transition: opacity 1s ease-out;
 
     h1 {
         position: absolute;
         font-size: 8em;
         margin-top: 100px;
         z-index: 2000;
-
+        background: linear-gradient(210deg, $light, lighten($primary, 50));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        small {
+            font-size: 50%;
+        }
         @include media-breakpoint-down(sm) {
             font-size: 4em;
         }
@@ -23,8 +27,9 @@
 
     img.loader {
         position: absolute;
-        bottom: 1.5rem;
-        left: calc(100vw / 2 - 25px);
+        width: 100px;
+        bottom: calc(50vh - 25px);
+        left: calc(50vw - 50px);
     }
 
 
@@ -32,13 +37,12 @@
     .clip-wrapper {
         .clip-text {
             height: 100vh;
-            padding-top: calc(100vh / 2 - 3rem);
+            padding-top: 30vh;
 
-            span {
+            p {
                 font-size: 7rem;
 
                 @include media-breakpoint-down(sm) {
-                    padding-top: calc(100vh / 2 - 20px);
                     font-size: 40px;
                 }
             }

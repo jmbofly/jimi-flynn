@@ -17,7 +17,7 @@
 
 .classy-navbar-toggler .navbarToggler span {
     position: relative;
-    background: linear-gradient(180deg, $primary, $peach);
+    background: lighten($primary, 50);
     border-radius: 3px;
     display: block;
     height: 3px;

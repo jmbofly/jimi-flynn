@@ -14,14 +14,12 @@
 </nav>
 
 <aside id="sidenav-wrapper">
-    <div class="container">
-      <div class="col-12">
-        <div class="mx-auto logo">
-          <img class="" width="100" src="assets/svg/logo.svg" alt="">
-        </div>
+    
+      <div class="mx-auto logo">
+        <img class="" width="100" src="assets/svg/logo.svg" alt="">
       </div>
       <div class="Menu">
-        <ul class="Menu-list">
+        <ul class="Menu-list px-0">
           <li class="Menu-list-item">
             Home
             <span class="Mask"><span>Home</span></span>
@@ -45,18 +43,19 @@
         </ul>
       </div>
 
-    </div>
     
 </aside>
 <main id="main-wrapper">
   <router-outlet></router-outlet>
 </main>
 <div id="loader" class="">
-  <h1 data-aos="fade-down" data-aos-delay="350" class="w-100 text-center text-primary">Hi! I'm Jimi.</h1>
-  <img src="assets/svg/loader.svg" class="loader" alt="" width="50">
+  <!-- <img src="assets/svg/loader.svg" class="loader" alt="Loading image"> -->
   
+  <h1 data-aos="fade-down" data-aos-delay="350" class="w-100 text-center">HI!<br><small>My name is...</small></h1>
   <div class="clip-wrapper font-sm no-border">
     <div class="clip-text clip-text--cover"
-      [style.background-image]="'url(assets/img/galaxy.jpg)'"><span>Just a sec...</span></div>
+      [style.background-image]="'url(assets/img/galaxy.jpg)'">
+      <p>___________</p></div>
   </div>
+  
 </div>

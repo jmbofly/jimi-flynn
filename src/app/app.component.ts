@@ -38,25 +38,28 @@ export class AppComponent implements OnInit {
   private loading() {
     const loader = $('#loader .clip-text');
     const tl = new TimelineMax();
-    tl.set(loader, { backgroundPositionX: '-250vw', opacity: 1 });
-    tl.to(loader, 6, {
-      delay: 1,
+    tl.set(loader, { backgroundPositionX: '-100vw' })
+      .to(loader, 4, {
+      ease: 'power3.inOut',
       backgroundPositionX: '0',
-      ease: 'circ',
       onComplete: () => {
         tl.to('#loader', 1, {
           ease: 'power3.inOut(1,0)',
           top: '100vh',
-          opacity: 0,
-        }, '+=.1')
-          .to(loader, .25, { opacity: 0 })
-          .to('#portrait > *', .5, {
-            ease: 'linear',
+        })
+          // .to(loader, .25, { opacity: 0 })
+          .to('.hero-title', .5, { ease: 'expo', opacity: 1, marginTop: 0 }, '-=.5')
+          .to('#first-name-dots', 1.25, { ease: 'power3.inOut', translateY: '-22px' })
+          .to('#last-name > .letters > *',.75, { ease: 'power3.inOut', stagger: .25, translateX: 0, opacity: 1})
+          .to('.hero-subtitle', .5, { ease: 'expo', scale: 1, opacity: 1 })
+          .to('#portrait > *', .25, {
+            ease: 'power3.inOut',
             stagger: .1,
+            fill: 'rgba(13, 11, 15, 0.1)',
             strokeDashoffset: 0,
           })
-          .to('.scroll-down-text', 1, {opacity: 1})
-          .to($('.scroller-toggle-wrapper'), .35, { bottom: '3rem', opacity: 1 }, '>')
+          // .to('.scroll-down-text', 1, {opacity: 1})
+          .to($('.scroller-toggle-wrapper'), .35, { right: '1.5rem', opacity: 1 })
       }
     });
   }

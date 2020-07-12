@@ -12,7 +12,7 @@ $alternate: $cherry;
 $accent: $neo-green;
 $dark: #131313;
 $light: #e4e4e4; 
-$gradient-primary: linear-gradient(210deg,  $dark, darken($primary, 8));
+$gradient-primary: linear-gradient(-180deg,  $dark, darken($primary, 8));
 $gradient-secondary: linear-gradient(210deg, $secondary, $primary);
 $gradient-alternate: linear-gradient(210deg, $secondary, $alternate);
 $gradient-dark: linear-gradient(210deg, $kale, $dark);

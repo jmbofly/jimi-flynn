@@ -1,36 +1,34 @@
 <div #slider class="slider-wrapper" id="projects_gallery">
     <div class="stage">
-        <div class="item" *ngFor="let slide of data; let i = index;" [ngClass]="i ===  currentSlideIndex ? 'active  animate__animated  animate__zoomIn':'animate__animated animate__fadeOutUp'">
+        <div class="item" *ngFor="let slide of data; let i = index;" [ngClass]="i ===  currentSlideIndex ? 'active  animate__animated  animate__lightSpeedInLeft':''">
             <div class="clip-wrapper font-lg h-100">
                 <div class="clip-text clip-text--cover h-100 w-100"
                 [style.background-image]="'url(' + slide?.imageSrc + ')'">
-                <div class="container">
-                    <h1 class="text-center">{{slide?.title}}</h1>
-                    <p class="mt-5">{{slide.text}}</p>
-                </div>
+                    <h1>{{slide?.letter}}</h1>
+                    <p>____</p>
             </div>
             </div>
         </div>
     </div>
-    <div #indicators class="slider-controls">
+    <div class="controls">
         <div class="fltr">
             <span class="from-move" id="from-move"></span>
-            <ul class="controls-list py-0" id="controls-list">
-                <li (click)="slideTo(0)"><i class="fa" [ngClass]="data[0].icon"></i></li>
+            <ul class="controls-list" id="controls-list">
+                <li class="active" (click)="slideTo(0)"><i class="fa" [ngClass]="data[0].icon"></i></li>
                 <li (click)="slideTo(1)"> <i class="fa" [ngClass]="data[1].icon"></i></li>
                 <li (click)="slideTo(2)"> <i class="fa" [ngClass]="data[2].icon"></i></li>
                 <li (click)="slideTo(3)"> <i class="fa" [ngClass]="data[3].icon"></i></li>
             </ul>
         </div>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-flt">
+            <defs>
+                <filter id="gooey">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo">
+                    </feColorMatrix>
+                    <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
+                </filter>
+            </defs>
+        </svg>
     </div>
 </div>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-flt">
-    <defs>
-        <filter id="gooey">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo">
-            </feColorMatrix>
-            <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
-        </filter>
-    </defs>
-</svg>

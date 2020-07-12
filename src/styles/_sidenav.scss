@@ -4,14 +4,13 @@
     z-index: 1011 !important;
     width: 100vw;
     height: 100vh;
-    background: $gradient-dark;
+    background: $dark;
     transform: translate(-100vw, 0);
 
     .logo {
-        max-width: 30vw;
         top: -50px;
         position: fixed;
-        left: calc(50vw - 35px);
+        left: calc(50vw - 50px);
         background: -webkit-linear-gradient(180deg, $cherry, $accent);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -25,7 +24,7 @@
 
     // === Settings =====
     %font-settings {
-        font-family: "Gilroy ExtraBold", system-ui, sans-serif;
+        font-family: 'Days One', sans-serif;
         font-style: normal;
         font-weight: normal;
         -webkit-font-smoothing: antialiased;
